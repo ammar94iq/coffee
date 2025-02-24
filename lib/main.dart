@@ -3,16 +3,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'home.dart';
 
-/*
-void main() {
-  runApp(const MyApp());
-}
-*/
 void main() {
   runApp(
     ScreenUtilInit(
-      designSize: Size(375,
-          812), // Set the base design size (adjust based on your Figma/sketch file)
+      designSize: Size(375, 812),
       builder: (context, child) => MyApp(),
     ),
   );
