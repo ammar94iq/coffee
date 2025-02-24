@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+final ScrollController _categoryScrollController = ScrollController();
+
 class MenuPage extends StatelessWidget {
   const MenuPage({super.key});
 
@@ -172,18 +174,31 @@ class MenuPage extends StatelessWidget {
   Widget _buildCategories() {
     return SizedBox(
       height: 150.h,
-      child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        physics: BouncingScrollPhysics(),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            _categoryItem('images/cat1.png'),
-            _categoryItem('images/cat1.png', isSelected: true),
-            _categoryItem('images/cat1.png'),
-            _categoryItem('images/cat1.png'),
-            _categoryItem('images/cat1.png'),
-          ],
+      child: Listener(
+        onPointerMove: (PointerMoveEvent event) {
+          if (_categoryScrollController.hasClients) {
+            _categoryScrollController.jumpTo(
+              (_categoryScrollController.offset + event.delta.dx).clamp(
+                _categoryScrollController.position.minScrollExtent,
+                _categoryScrollController.position.maxScrollExtent,
+              ),
+            );
+          }
+        },
+        child: SingleChildScrollView(
+          controller: _categoryScrollController,
+          scrollDirection: Axis.horizontal,
+          physics: BouncingScrollPhysics(),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              _categoryItem('images/cat1.png'),
+              _categoryItem('images/cat1.png', isSelected: true),
+              _categoryItem('images/cat1.png'),
+              _categoryItem('images/cat1.png'),
+              _categoryItem('images/cat1.png'),
+            ],
+          ),
         ),
       ),
     );
